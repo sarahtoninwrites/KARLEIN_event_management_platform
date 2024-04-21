@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid p-4">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Neevently</a>
+    <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Discover
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('events') }}">Browse Events</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a class="dropdown-item" href="{{ url_for('create_event_page') }}">Create an event</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ url_for('cart') }}">View Cart</a></li>
+            {% else %}
+            <li><a class="dropdown-item" >Create an event</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" >View Cart</a></li>
+            {% endif %}
+
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+    {% if current_user.is_authenticated %}
+    <button class="btn btn-outline-danger ml-2">
+      <a href="{{ url_for('logout') }}" class="text-red-500 hover:text-white underline-none">Logout</a>
+  </button>
+  {% else %}
+  <button class="btn btn-outline-success ml-2">
+    <a href="{{ url_for('login') }}" class="text-green-500 hover:text-white underline-none">Login</a>
+</button>
+      {% endif %}
+  </div>
+</nav>
+
+<div class="container mx-auto">
+    <h1 class="text-center text-3xl mt-10 mb-6">Events</h1>
+    <div class="grid grid-cols-3 gap-4">
+        {% for event in all_events %}
+        <div class="p-4 border rounded-lg">
+            <h2 class="text-xl">{{ event.name }}</h2>
+            <p class="mt-2">{{ event.description }}</p>
+            <p class="mt-2">Date: {{ event.date }}</p>
+            <p class="mt-2">Cost: ₹{{ event.cost }}</p>
+            <form action="{{ url_for('add_to_cart', event_id=event.id) }}" method="POST">
+              <button type="submit" class="btn btn-primary mt-2">Add to Cart</button>
+          </form>
+          {% if current_user.is_authenticated %}
+            {% if current_user.is_admin %}
+        <!-- Option to delete event -->
+        <form action="{{ url_for('delete_event', event_id=event.id) }}" method="POST">
+            <button type="submit" class="btn btn-primary mt-2">Delete</button>
+        </form>
+            {% endif %}
+          {% endif %}
+
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+<!-- events.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Catalog</title>
+</head>
+<body>
+    <h1>Event Catalog</h1>
+    <ul>
+        {% for event in all_events %}
+        <li>
+            <h2>{{ event.name }}</h2>
+            <p><strong>Description:</strong> {{ event.description }}</p>
+            <p><strong>Date:</strong> {{ event.date }}</p>
+            <p><strong>Cost:</strong> {{ event.cost }}</p>
+            <form action="{{ url_for('add_to_cart', event_id=event.id) }}" method="POST">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html> -->

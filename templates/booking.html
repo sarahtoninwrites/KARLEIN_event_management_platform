@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid p-4">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Neevently</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Discover
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('events') }}">Browse Events</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a class="dropdown-item" href="{{ url_for('create_event_page') }}">Create an Event</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ url_for('cart') }}">View Cart</a></li>
+            {% else %}
+            <li><a class="dropdown-item disabled" >Create an Event</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item disabled" >View Cart</a></li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      {% if current_user.is_authenticated %}
+      <button class="btn btn-outline-danger ml-2">
+        <a href="{{ url_for('logout') }}" class="text-red-500 hover:text-white underline-none">Logout</a>
+      </button>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<div class="container mx-auto">
+  <h1 class="text-center text-3xl mt-10 mb-6">Booking</h1>
+  <h2 class="mb-4">Invoice</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Date Added</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+      <tr>
+        <td>{{ item.event.name }}</td>
+        <td>{{ item.date_added }}</td>
+        <td>₹{{ item.cost }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2"><strong>Total Cost</strong></td>
+        <td><strong>₹{{ total_cost }}</strong></td>
+      </tr>
+    </tfoot>
+  </table>
+  
+  <form action="{{ url_for('booking') }}" method="POST" class="mx-auto max-w-sm">
+    <div class="form-group">
+      <label for="payment_status">Payment Status:</label>
+      <select id="payment_status" name="payment_status" class="form-control mb-4" required>
+        <option value="Pending">Pending</option>
+        <option value="Paid">Paid</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Checkout / Pay</button>
+  </form>
+</div>
+{% endblock %}
+
+
+
+<!-- booking.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+</head>
+<body>
+    <h1>Booking</h1>
+    <h2>Invoice</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Date Added</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.event.name }}</td>
+                <td>{{ item.date_added }}</td>
+                <td>₹{{ item.cost }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"><strong>Total Cost</strong></td>
+                <td><strong>₹{{ total_cost }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    <form action="{{ url_for('booking') }}" method="POST">
+        <label for="payment_status">Payment Status:</label>
+        <select name="payment_status" id="payment_status">
+            <option value="Pending">Pending</option>
+            <option value="Paid">Paid</option>
+        </select>
+        <button type="submit">Checkout / Pay</button>
+    </form>
+</body>
+</html> -->

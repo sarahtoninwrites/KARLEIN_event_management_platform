@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid p-4">
+    <a class="navbar-brand" href="{{ url_for('index') }}">Neevently</a>
+    <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Discover
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('events') }}">Browse Events</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a class="dropdown-item" href="{{ url_for('create_event_page') }}">Create an event</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ url_for('cart') }}">View Cart</a></li>
+            {% else %}
+            <li><a class="dropdown-item" >Create an event</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" >View Cart</a></li>
+            {% endif %}
+
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+    {% if current_user.is_authenticated %}
+    <button class="btn btn-outline-danger ml-2">
+      <a href="{{ url_for('logout') }}" class="text-red-500 hover:text-white underline-none">Logout</a>
+  </button>
+      {% endif %}
+  </div>
+</nav>
+
+<div class="container mx-auto">
+    <h1 class="text-center text-3xl mt-10 mb-6">Create Event</h1>
+    <form action="{{ url_for('create_event_page') }}" method="POST" class="mx-auto max-w-sm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control mb-4" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control mb-4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" class="form-control mb-4" required>
+        </div>
+        <div class="form-group">
+            <label for="cost">Cost:</label>
+            <input type="number" id="cost" name="cost" class="form-control mb-4" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Event</button>
+    </form>
+</div>
+{% endblock %}
