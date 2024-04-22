@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -223,17 +223,42 @@ def delete_event(event_id):
     db.session.commit()
     return redirect(url_for('events'))
 
+@app.route('/update_event/<int:event_id>', methods=['GET', 'POST'])
+@login_required
+def update_event(event_id):
+    # Retrieve the event object from the database
+    event = Event.query.get_or_404(event_id)
+
+    # Check if the current user is admin
+    if not current_user.is_admin:
+        flash('You do not have permission to update events.', 'danger')
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        try:
+            # Update event details
+            event.name = request.form['name']
+            event.description = request.form['description']
+            event.date = datetime.strptime(request.form['date'], '%Y-%m-%d').date()
+            event.cost = float(request.form['cost'])
+
+            # Commit changes to the database
+            db.session.commit()
+
+            flash('Event details updated successfully!', 'success')
+            return redirect(url_for('events'))
+        except KeyError:
+            flash('Invalid form data. Please ensure all fields are filled.', 'danger')
+            return redirect(url_for('update_event', event_id=event_id))
+        except ValueError:
+            flash('Invalid cost value. Please enter a valid number.', 'danger')
+            return redirect(url_for('update_event', event_id=event_id))
+
+    return render_template('update_event.html', event=event)
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-
-
-
-
-
 
 
 

@@ -3,7 +3,7 @@
 {% block content %}
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid p-4">
-    <a class="navbar-brand" href="{{ url_for('index') }}">Neevently</a>
+    <a class="navbar-brand" href="{{ url_for('index') }}">Karlein</a>
     {% if current_user.is_authenticated %}
     <button class="btn btn-outline-danger ml-2">
       <a href="{{ url_for('logout') }}" class="text-red-500 hover:text-white underline-none">Logout</a>

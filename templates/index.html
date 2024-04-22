@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg=[#ffff]">
   <div class="container-fluid p-4">
-    <a class="navbar-brand" href="{{ url_for('index') }}">Neevently</a>
+    <a class="navbar-brand" href="{{ url_for('index') }}">Karlein</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -43,8 +43,118 @@
     {% endif %}
   </div>
 </nav>
+<header class="hero">
+  <div class="container">
+    <h1>Aaj kuch <span class="italic text-violet-500">Karlein?</span></h1>
+    <p>Discover and book your next adventure</p>
+    <br>
+    <a href="{{ url_for('events') }}" class="btn mt-8 btn-primary btn-lg">Browse Events</a>
+  </div>
+</header>
 
-<div class="container mx-auto py-12 items-center justify-center text-center">
+
+<section class="features">
+  <div class="container">
+      <div class="feature">
+          <!-- <img src="images/create-event.svg" alt="Create Event"> -->
+          <div id="carouselExampleCaptions" class="carousel slide h-46 mt-12 items-center justify-center text-center mx-auto">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner items-center justify-center text-center">
+              <div class="carousel-item active">
+                <img src="{{ url_for('static', filename='des1.png') }}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{{ url_for('static', filename='des2.png') }}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{{ url_for('static', filename='des3.png') }}" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <a href="{{ url_for('create_event_page') }}" class="btn mt-8 btn-primary btn-lg">Post your event today!</a>
+      </div>
+      <div class="feature">
+          <!-- <img src="images/discover-events.svg" alt="Discover Events"> -->
+          <div id="carouselExampleCaptions2" class="carousel slide h-46 mt-12 items-center justify-center text-center mx-auto">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="1" aria-label="Slide 5"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="2" aria-label="Slide 6"></button>
+            </div>
+            <div class="carousel-inner items-center justify-center text-center">
+              <div class="carousel-item active">
+                <img src="{{ url_for('static', filename='sch3.png') }}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{{ url_for('static', filename='sch1.png') }}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{{ url_for('static', filename='ret3.png') }}" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <a href="{{ url_for('events') }}" class="btn mt-8 btn-primary btn-lg">Explore Now</a>
+        </div>
+       <!--
+      <div class="feature">
+          <div id="carouselExampleCaptions3" class="carousel slide h-46 items-center justify-center text-center mx-auto">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 7"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="1" aria-label="Slide 8"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide-to="2" aria-label="Slide 9"></button>
+            </div>
+            <div class="carousel-inner items-center justify-center text-center">
+              <div class="carousel-item active">
+                <img src="{{ url_for('static', filename='sch1.png') }}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{{ url_for('static', filename='sch2.png') }}" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="{{ url_for('static', filename='sch3.png') }}" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions3" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+          <a href="{{ url_for('booking') }}" class="btn btn-primary">View Bookings</a>
+      </div>
+  </div> -->
+</section>
+
+<footer class="footer">
+  <div class="container">
+      <p>&copy; 2024 Karlein. All rights reserved.</p>
+  </div>
+</footer>
+<!-- <div class="container mx-auto py-12 items-center justify-center text-center">
   <h1 class="text-4xl font-bold mb-8">Find Your Next Adventure!</h1>
   <div class="flex flex-row">
   <div id="carouselExampleCaptions" class="carousel slide w-56 items-center justify-center text-center mx-auto">
@@ -144,7 +254,7 @@
     </div>
   </div>
   
-</div>
+</div> -->
 
 {% endblock %}
 
